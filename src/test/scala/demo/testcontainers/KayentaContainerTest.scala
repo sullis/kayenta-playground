@@ -28,8 +28,7 @@ class KayentaContainerSpec
 
   "swagger UI" should "exist" in {
     RestAssured.given()
-      .baseUri(kayenta.swaggerUiUrl)
-      .get("")
+      .get(kayenta.swaggerUiUrl)
       .prettyPeek()
       .then()
       .assertThat()
@@ -40,8 +39,7 @@ class KayentaContainerSpec
 
   "swagger 2 specification" should "exist" in {
     RestAssured.given()
-      .baseUri(kayenta.swaggerSpecificationUrl)
-      .get("")
+      .get(kayenta.swaggerSpecificationUrl)
       .prettyPeek()
       .then()
       .assertThat()
