@@ -48,6 +48,5 @@ class KayentaContainerSpec
       .statusCode(200)
       .contentType("application/json")
       .body(containsString("Kayenta API"))
-    
   }
 }
