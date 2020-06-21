@@ -1,0 +1,3384 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Kayenta API",
+        "contact": {
+
+        }
+    },
+    "host": "localhost:32865",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "admin-controller",
+            "description": "Admin Controller"
+        },
+        {
+            "name": "canary-config-controller",
+            "description": "Canary Config Controller"
+        },
+        {
+            "name": "canary-controller",
+            "description": "Canary Controller"
+        },
+        {
+            "name": "canary-judges-controller",
+            "description": "Canary Judges Controller"
+        },
+        {
+            "name": "canary-result-archive-controller",
+            "description": "Manipulate the archived canary result object store.  This should be used only for Kayenta maintenance.  Use the /canary endpoints for canary results."
+        },
+        {
+            "name": "credentials-controller",
+            "description": "Credentials Controller"
+        },
+        {
+            "name": "metric-set-list-controller",
+            "description": "Metric Set List Controller"
+        },
+        {
+            "name": "metric-set-pair-list-controller",
+            "description": "Metric Set Pair List Controller"
+        },
+        {
+            "name": "metrics-service-metadata-controller",
+            "description": "Metrics Service Metadata Controller"
+        },
+        {
+            "name": "operation-handler",
+            "description": "Operation Handler"
+        },
+        {
+            "name": "pipeline-controller",
+            "description": "Pipeline Controller"
+        },
+        {
+            "name": "queue-admin-controller",
+            "description": "Queue Admin Controller"
+        }
+    ],
+    "paths": {
+        "/admin/orca/instance/enabled": {
+            "post": {
+                "tags": [
+                    "admin-controller"
+                ],
+                "summary": "setInstanceEnabled",
+                "operationId": "setInstanceEnabledUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "enabledWrapper",
+                        "description": "enabledWrapper",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/admin/queue/hydrate": {
+            "post": {
+                "tags": [
+                    "queue-admin-controller"
+                ],
+                "summary": "hydrateQueue",
+                "operationId": "hydrateQueueUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "dryRun",
+                        "description": "dryRun",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "endMs",
+                        "description": "endMs",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "executionId",
+                        "description": "executionId",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "startMs",
+                        "description": "startMs",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/HydrateQueueOutput"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/admin/queue/kickPending": {
+            "post": {
+                "tags": [
+                    "queue-admin-controller"
+                ],
+                "summary": "kickPendingExecutions",
+                "operationId": "kickPendingExecutionsUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "pipelineConfigId",
+                        "description": "pipelineConfigId",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "purge",
+                        "description": "purge",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/admin/queue/pushMessage": {
+            "post": {
+                "tags": [
+                    "queue-admin-controller"
+                ],
+                "summary": "pushMessageIntoQueue",
+                "operationId": "pushMessageIntoQueueUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "message",
+                        "description": "message",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Message"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/canary": {
+            "post": {
+                "tags": [
+                    "canary-controller"
+                ],
+                "summary": "Initiate a canary pipeline with CanaryConfig provided",
+                "operationId": "initiateCanaryWithConfigUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "application",
+                        "in": "query",
+                        "description": "application",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "canaryAdhocExecutionRequest",
+                        "description": "canaryAdhocExecutionRequest",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/CanaryAdhocExecutionRequest"
+                        }
+                    },
+                    {
+                        "name": "metricsAccountName",
+                        "in": "query",
+                        "description": "metricsAccountName",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "parentPipelineExecutionId",
+                        "in": "query",
+                        "description": "parentPipelineExecutionId",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "storageAccountName",
+                        "in": "query",
+                        "description": "storageAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/CanaryExecutionResponse"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/canary/executions": {
+            "get": {
+                "tags": [
+                    "canary-controller"
+                ],
+                "summary": "Retrieve a list of an application's canary results",
+                "operationId": "getCanaryResultsByApplicationUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "application",
+                        "in": "query",
+                        "description": "application",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "limit",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "statuses",
+                        "in": "query",
+                        "description": "statuses",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "storageAccountName",
+                        "in": "query",
+                        "description": "storageAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CanaryExecutionStatusResponse"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/canary/{canaryConfigId}": {
+            "post": {
+                "tags": [
+                    "canary-controller"
+                ],
+                "summary": "Initiate a canary pipeline",
+                "operationId": "initiateCanaryUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "application",
+                        "in": "query",
+                        "description": "application",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "canaryConfigId",
+                        "in": "path",
+                        "description": "canaryConfigId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "canaryExecutionRequest",
+                        "description": "canaryExecutionRequest",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/CanaryExecutionRequest"
+                        }
+                    },
+                    {
+                        "name": "configurationAccountName",
+                        "in": "query",
+                        "description": "configurationAccountName",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "metricsAccountName",
+                        "in": "query",
+                        "description": "metricsAccountName",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "parentPipelineExecutionId",
+                        "in": "query",
+                        "description": "parentPipelineExecutionId",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "storageAccountName",
+                        "in": "query",
+                        "description": "storageAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/CanaryExecutionResponse"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/canary/{canaryExecutionId}": {
+            "get": {
+                "tags": [
+                    "canary-controller"
+                ],
+                "summary": "Retrieve status and results for a canary run",
+                "operationId": "getCanaryResultsUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "canaryExecutionId",
+                        "in": "path",
+                        "description": "canaryExecutionId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "storageAccountName",
+                        "in": "query",
+                        "description": "storageAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/CanaryExecutionStatusResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/canaryConfig": {
+            "get": {
+                "tags": [
+                    "canary-config-controller"
+                ],
+                "summary": "Retrieve a list of canary config ids and timestamps",
+                "operationId": "listAllCanaryConfigsUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "application",
+                        "in": "query",
+                        "description": "application",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "configurationAccountName",
+                        "in": "query",
+                        "description": "configurationAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Map«string,object»"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "post": {
+                "tags": [
+                    "canary-config-controller"
+                ],
+                "summary": "Write a canary config to object storage",
+                "operationId": "storeCanaryConfigUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "canaryConfig",
+                        "description": "canaryConfig",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CanaryConfig"
+                        }
+                    },
+                    {
+                        "name": "configurationAccountName",
+                        "in": "query",
+                        "description": "configurationAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/CanaryConfigUpdateResponse"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/canaryConfig/{canaryConfigId}": {
+            "get": {
+                "tags": [
+                    "canary-config-controller"
+                ],
+                "summary": "Retrieve a canary config from object storage",
+                "operationId": "loadCanaryConfigUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "canaryConfigId",
+                        "in": "path",
+                        "description": "canaryConfigId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "configurationAccountName",
+                        "in": "query",
+                        "description": "configurationAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/CanaryConfig"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "put": {
+                "tags": [
+                    "canary-config-controller"
+                ],
+                "summary": "Update a canary config",
+                "operationId": "updateCanaryConfigUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "canaryConfig",
+                        "description": "canaryConfig",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CanaryConfig"
+                        }
+                    },
+                    {
+                        "name": "canaryConfigId",
+                        "in": "path",
+                        "description": "canaryConfigId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "configurationAccountName",
+                        "in": "query",
+                        "description": "configurationAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/CanaryConfigUpdateResponse"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "canary-config-controller"
+                ],
+                "summary": "Delete a canary config",
+                "operationId": "deleteCanaryConfigUsingDELETE",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "canaryConfigId",
+                        "in": "path",
+                        "description": "canaryConfigId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "configurationAccountName",
+                        "in": "query",
+                        "description": "configurationAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/canaryResultArchive": {
+            "get": {
+                "tags": [
+                    "canary-result-archive-controller"
+                ],
+                "summary": "Retrieve a list of archived canary result ids in object storage",
+                "operationId": "listAllCanaryArchivedResultsUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "storageAccountName",
+                        "in": "query",
+                        "description": "storageAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Map«string,object»"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "post": {
+                "tags": [
+                    "canary-result-archive-controller"
+                ],
+                "summary": "Create an archived canary result to object storage",
+                "operationId": "storeArchivedCanaryResultUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "canaryExecutionStatusResponse",
+                        "description": "canaryExecutionStatusResponse",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CanaryExecutionStatusResponse"
+                        }
+                    },
+                    {
+                        "name": "pipelineId",
+                        "in": "query",
+                        "description": "pipelineId",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "storageAccountName",
+                        "in": "query",
+                        "description": "storageAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/CanaryArchiveResultUpdateResponse"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/canaryResultArchive/{pipelineId}": {
+            "get": {
+                "tags": [
+                    "canary-result-archive-controller"
+                ],
+                "summary": "Retrieve an archived canary result from object storage",
+                "operationId": "loadArchivedCanaryResultUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "pipelineId",
+                        "in": "path",
+                        "description": "pipelineId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "storageAccountName",
+                        "in": "query",
+                        "description": "storageAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/CanaryExecutionStatusResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "put": {
+                "tags": [
+                    "canary-result-archive-controller"
+                ],
+                "summary": "Update an archived canary result in object storage",
+                "operationId": "updateArchivedCanaryResultUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "canaryExecutionStatusResponse",
+                        "description": "canaryExecutionStatusResponse",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CanaryExecutionStatusResponse"
+                        }
+                    },
+                    {
+                        "name": "pipelineId",
+                        "in": "path",
+                        "description": "pipelineId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "storageAccountName",
+                        "in": "query",
+                        "description": "storageAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/CanaryArchiveResultUpdateResponse"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "canary-result-archive-controller"
+                ],
+                "summary": "Delete an archived canary result from object storage",
+                "operationId": "deleteArchivedCanaryResultUsingDELETE",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "pipelineId",
+                        "in": "path",
+                        "description": "pipelineId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "storageAccountName",
+                        "in": "query",
+                        "description": "storageAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/credentials": {
+            "get": {
+                "tags": [
+                    "credentials-controller"
+                ],
+                "summary": "Retrieve a list of all configured credentials",
+                "operationId": "listUsingGET_1",
+                "produces": [
+                    "*/*"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/AccountCredentials"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/health": {
+            "get": {
+                "tags": [
+                    "operation-handler"
+                ],
+                "summary": "handle",
+                "operationId": "handleUsingGET",
+                "produces": [
+                    "application/vnd.spring-boot.actuator.v3+json",
+                    "application/json",
+                    "application/vnd.spring-boot.actuator.v2+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body",
+                        "required": false,
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/judges": {
+            "get": {
+                "tags": [
+                    "canary-judges-controller"
+                ],
+                "summary": "Retrieve a list of all configured canary judges",
+                "operationId": "listUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CanaryJudge"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/judges/comparison": {
+            "post": {
+                "tags": [
+                    "canary-judges-controller"
+                ],
+                "summary": "Apply a pair of judges to a canned set of data",
+                "operationId": "initiateJudgeComparisonUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "canaryConfigId",
+                        "in": "query",
+                        "description": "canaryConfigId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "configurationAccountName",
+                        "in": "query",
+                        "description": "configurationAccountName",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "marginalThreshold",
+                        "in": "query",
+                        "description": "marginalThreshold",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "metricSetPairListId",
+                        "in": "query",
+                        "description": "metricSetPairListId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "overrideCanaryJudge1",
+                        "in": "query",
+                        "description": "The name of the first judge to use, e.g. NetflixACAJudge-v1.0, dredd-v1.0.",
+                        "required": false,
+                        "type": "string",
+                        "allowEmptyValue": false
+                    },
+                    {
+                        "name": "overrideCanaryJudge2",
+                        "in": "query",
+                        "description": "The name of the second judge to use, e.g. NetflixACAJudge-v1.0, dredd-v1.0.",
+                        "required": false,
+                        "type": "string",
+                        "allowEmptyValue": false
+                    },
+                    {
+                        "name": "passThreshold",
+                        "in": "query",
+                        "description": "passThreshold",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "storageAccountName",
+                        "in": "query",
+                        "description": "storageAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/CanaryExecutionResponse"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/judges/comparison/{executionId}": {
+            "get": {
+                "tags": [
+                    "canary-judges-controller"
+                ],
+                "summary": "Retrieve the results of a judge comparison",
+                "operationId": "getJudgeComparisonResultsUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "executionId",
+                        "in": "path",
+                        "description": "executionId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/judges/judge": {
+            "post": {
+                "tags": [
+                    "canary-judges-controller"
+                ],
+                "summary": "Exercise a judge directly, without any orchestration or querying of metrics services",
+                "operationId": "judgeUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "canaryConfigId",
+                        "in": "query",
+                        "description": "canaryConfigId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "configurationAccountName",
+                        "in": "query",
+                        "description": "configurationAccountName",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "marginalThreshold",
+                        "in": "query",
+                        "description": "marginalThreshold",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "metricSetPairListId",
+                        "in": "query",
+                        "description": "metricSetPairListId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "passThreshold",
+                        "in": "query",
+                        "description": "passThreshold",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "storageAccountName",
+                        "in": "query",
+                        "description": "storageAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/CanaryJudgeResult"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/metadata/metricsService": {
+            "get": {
+                "tags": [
+                    "metrics-service-metadata-controller"
+                ],
+                "summary": "Retrieve a list of descriptors for use in populating the canary config ui",
+                "operationId": "listMetadataUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "metricsAccountName",
+                        "in": "query",
+                        "description": "metricsAccountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Map"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/metricSetList": {
+            "get": {
+                "tags": [
+                    "metric-set-list-controller"
+                ],
+                "summary": "Retrieve a list of metric set list ids and timestamps",
+                "operationId": "listAllMetricSetListsUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "accountName",
+                        "in": "query",
+                        "description": "accountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Map«string,object»"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "post": {
+                "tags": [
+                    "metric-set-list-controller"
+                ],
+                "summary": "Write a metric set list to object storage",
+                "operationId": "storeMetricSetListUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "accountName",
+                        "in": "query",
+                        "description": "accountName",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "metricSetList",
+                        "description": "metricSetList",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MetricSet"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/metricSetList/{metricSetListId}": {
+            "get": {
+                "tags": [
+                    "metric-set-list-controller"
+                ],
+                "summary": "Retrieve a metric set list from object storage",
+                "operationId": "loadMetricSetListUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "accountName",
+                        "in": "query",
+                        "description": "accountName",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "metricSetListId",
+                        "in": "path",
+                        "description": "metricSetListId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MetricSet"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "metric-set-list-controller"
+                ],
+                "summary": "Delete a metric set list",
+                "operationId": "deleteMetricSetListUsingDELETE",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "accountName",
+                        "in": "query",
+                        "description": "accountName",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "metricSetListId",
+                        "in": "path",
+                        "description": "metricSetListId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/metricSetPairList": {
+            "get": {
+                "tags": [
+                    "metric-set-pair-list-controller"
+                ],
+                "summary": "Retrieve a list of metric set pair list ids and timestamps",
+                "operationId": "listAllMetricSetPairListsUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "accountName",
+                        "in": "query",
+                        "description": "accountName",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Map«string,object»"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "post": {
+                "tags": [
+                    "metric-set-pair-list-controller"
+                ],
+                "summary": "Write a metric set pair list to object storage",
+                "operationId": "storeMetricSetPairListUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "accountName",
+                        "in": "query",
+                        "description": "accountName",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "metricSetPairList",
+                        "description": "metricSetPairList",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MetricSetPair"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/metricSetPairList/{metricSetPairListId}": {
+            "get": {
+                "tags": [
+                    "metric-set-pair-list-controller"
+                ],
+                "summary": "Retrieve a metric set pair list from object storage",
+                "operationId": "loadMetricSetPairListUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "accountName",
+                        "in": "query",
+                        "description": "accountName",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "metricSetPairListId",
+                        "in": "path",
+                        "description": "metricSetPairListId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MetricSetPair"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "metric-set-pair-list-controller"
+                ],
+                "summary": "Delete a metric set pair list",
+                "operationId": "deleteMetricSetPairListUsingDELETE",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "accountName",
+                        "in": "query",
+                        "description": "accountName",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "metricSetPairListId",
+                        "in": "path",
+                        "description": "metricSetPairListId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/metricSetPairList/{metricSetPairListId}/{metricSetPairId}": {
+            "get": {
+                "tags": [
+                    "metric-set-pair-list-controller"
+                ],
+                "summary": "Retrieve a single metric set pair from a metricSetPairList from object storage",
+                "operationId": "loadMetricSetPairUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "accountName",
+                        "in": "query",
+                        "description": "accountName",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "metricSetPairId",
+                        "in": "path",
+                        "description": "metricSetPairId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "metricSetPairListId",
+                        "in": "path",
+                        "description": "metricSetPairListId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/MetricSetPair"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/pipelines": {
+            "get": {
+                "tags": [
+                    "pipeline-controller"
+                ],
+                "summary": "List all pipeline IDs",
+                "operationId": "listUsingGET_2",
+                "produces": [
+                    "*/*"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/pipelines/start": {
+            "post": {
+                "tags": [
+                    "pipeline-controller"
+                ],
+                "summary": "Initiate a pipeline execution",
+                "operationId": "startUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "map",
+                        "description": "map",
+                        "required": true,
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/pipelines/{executionId}": {
+            "get": {
+                "tags": [
+                    "pipeline-controller"
+                ],
+                "summary": "Retrieve a pipeline execution",
+                "operationId": "getPipelineUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "executionId",
+                        "in": "path",
+                        "description": "executionId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/PipelineExecution"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "pipeline-controller"
+                ],
+                "summary": "Delete a pipeline execution",
+                "operationId": "deleteUsingDELETE",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "executionId",
+                        "in": "path",
+                        "description": "executionId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseEntity"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/pipelines/{executionId}/cancel": {
+            "put": {
+                "tags": [
+                    "pipeline-controller"
+                ],
+                "summary": "Cancel a pipeline execution",
+                "operationId": "cancelUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "executionId",
+                        "in": "path",
+                        "description": "executionId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        }
+    },
+    "definitions": {
+        "AccountCredentials": {
+            "type": "object",
+            "properties": {
+                "locations": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "recommendedLocations": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "supportedTypes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "METRICS_STORE",
+                            "OBJECT_STORE",
+                            "CONFIGURATION_STORE",
+                            "REMOTE_JUDGE"
+                        ]
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "title": "AccountCredentials"
+        },
+        "Action": {
+            "type": "object",
+            "required": [
+                "context",
+                "description"
+            ],
+            "properties": {
+                "context": {
+                    "$ref": "#/definitions/ActionContext"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "message": {
+                    "$ref": "#/definitions/Message"
+                }
+            },
+            "title": "Action"
+        },
+        "ActionContext": {
+            "type": "object",
+            "properties": {
+                "stageId": {
+                    "type": "string"
+                },
+                "stageStartTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "stageType": {
+                    "type": "string"
+                },
+                "taskId": {
+                    "type": "string"
+                },
+                "taskStartTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "taskType": {
+                    "type": "string"
+                }
+            },
+            "title": "ActionContext"
+        },
+        "Artifact": {
+            "type": "object",
+            "properties": {
+                "artifactAccount": {
+                    "type": "string"
+                },
+                "customKind": {
+                    "type": "boolean"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "type": "object"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "provenance": {
+                    "type": "string"
+                },
+                "reference": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                }
+            },
+            "title": "Artifact"
+        },
+        "Attribute": {
+            "type": "object",
+            "title": "Attribute"
+        },
+        "AuthenticationDetails": {
+            "type": "object",
+            "properties": {
+                "allowedAccounts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "title": "AuthenticationDetails"
+        },
+        "CanaryAdhocExecutionRequest": {
+            "type": "object",
+            "properties": {
+                "canaryConfig": {
+                    "$ref": "#/definitions/CanaryConfig"
+                },
+                "executionRequest": {
+                    "$ref": "#/definitions/CanaryExecutionRequest"
+                }
+            },
+            "title": "CanaryAdhocExecutionRequest"
+        },
+        "CanaryAnalysisResult": {
+            "type": "object",
+            "properties": {
+                "classification": {
+                    "type": "string"
+                },
+                "classificationReason": {
+                    "type": "string"
+                },
+                "controlMetadata": {
+                    "type": "object"
+                },
+                "critical": {
+                    "type": "boolean"
+                },
+                "experimentMetadata": {
+                    "type": "object"
+                },
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "resultMetadata": {
+                    "type": "object"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "title": "CanaryAnalysisResult"
+        },
+        "CanaryArchiveResultUpdateResponse": {
+            "type": "object",
+            "properties": {
+                "pipelineId": {
+                    "type": "string"
+                }
+            },
+            "title": "CanaryArchiveResultUpdateResponse"
+        },
+        "CanaryClassifierConfig": {
+            "type": "object",
+            "properties": {
+                "groupWeights": {
+                    "type": "object",
+                    "example": {
+                        "pod-group": 70,
+                        "app-group": 30
+                    },
+                    "description": "List of each metrics group along with its corresponding weight. Weights must total 100.",
+                    "additionalProperties": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "title": "CanaryClassifierConfig",
+            "description": "The classification configuration, such as group weights."
+        },
+        "CanaryClassifierThresholdsConfig": {
+            "type": "object",
+            "properties": {
+                "marginal": {
+                    "type": "number",
+                    "format": "double",
+                    "example": 50.0,
+                    "description": "If canary score is lower than this value -- canary is considered marginal (failed)."
+                },
+                "pass": {
+                    "type": "number",
+                    "format": "double",
+                    "example": 75.0,
+                    "description": "If canary score is higher than this value -- canary is considered successful."
+                }
+            },
+            "title": "CanaryClassifierThresholdsConfig",
+            "description": "Sets thresholds for canary score."
+        },
+        "CanaryConfig": {
+            "type": "object",
+            "properties": {
+                "applications": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "classifier": {
+                    "$ref": "#/definitions/CanaryClassifierConfig"
+                },
+                "configVersion": {
+                    "type": "string"
+                },
+                "createdTimestamp": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "createdTimestampIso": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "judge": {
+                    "$ref": "#/definitions/CanaryJudgeConfig"
+                },
+                "metrics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CanaryMetricConfig"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "templates": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "updatedTimestamp": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "updatedTimestampIso": {
+                    "type": "string"
+                }
+            },
+            "title": "CanaryConfig"
+        },
+        "CanaryConfigUpdateResponse": {
+            "type": "object",
+            "properties": {
+                "canaryConfigId": {
+                    "type": "string"
+                }
+            },
+            "title": "CanaryConfigUpdateResponse"
+        },
+        "CanaryExecutionRequest": {
+            "type": "object",
+            "properties": {
+                "metadata": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Metadata"
+                    }
+                },
+                "scopes": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/CanaryScopePair"
+                    }
+                },
+                "siteLocal": {
+                    "type": "object"
+                },
+                "thresholds": {
+                    "$ref": "#/definitions/CanaryClassifierThresholdsConfig"
+                }
+            },
+            "title": "CanaryExecutionRequest"
+        },
+        "CanaryExecutionResponse": {
+            "type": "object",
+            "properties": {
+                "canaryExecutionId": {
+                    "type": "string"
+                }
+            },
+            "title": "CanaryExecutionResponse"
+        },
+        "CanaryExecutionStatusResponse": {
+            "type": "object",
+            "properties": {
+                "application": {
+                    "type": "string"
+                },
+                "buildTimeIso": {
+                    "type": "string"
+                },
+                "buildTimeMillis": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "canaryConfigId": {
+                    "type": "string"
+                },
+                "canaryExecutionRequest": {
+                    "$ref": "#/definitions/CanaryExecutionRequest"
+                },
+                "complete": {
+                    "type": "boolean"
+                },
+                "config": {
+                    "$ref": "#/definitions/CanaryConfig"
+                },
+                "configurationAccountName": {
+                    "type": "string"
+                },
+                "endTimeIso": {
+                    "type": "string"
+                },
+                "endTimeMillis": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "exception": {
+                    "type": "object"
+                },
+                "metricSetPairListId": {
+                    "type": "string"
+                },
+                "metricsAccountName": {
+                    "type": "string"
+                },
+                "parentPipelineExecutionId": {
+                    "type": "string"
+                },
+                "pipelineId": {
+                    "type": "string"
+                },
+                "result": {
+                    "$ref": "#/definitions/CanaryResult"
+                },
+                "stageStatus": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "startTimeIso": {
+                    "type": "string"
+                },
+                "startTimeMillis": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "storageAccountName": {
+                    "type": "string"
+                }
+            },
+            "title": "CanaryExecutionStatusResponse"
+        },
+        "CanaryJudge": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "visible": {
+                    "type": "boolean"
+                }
+            },
+            "title": "CanaryJudge"
+        },
+        "CanaryJudgeConfig": {
+            "type": "object",
+            "required": [
+                "judgeConfigurations",
+                "name"
+            ],
+            "properties": {
+                "judgeConfigurations": {
+                    "type": "object",
+                    "example": {
+
+                    },
+                    "description": "Additional judgement configuration. As of right now, this should always be an empty object."
+                },
+                "name": {
+                    "type": "string",
+                    "example": "NetflixACAJudge-v1.0",
+                    "description": "Judge to use, as of right now there is only `NetflixACAJudge-v1.0`."
+                }
+            },
+            "title": "CanaryJudgeConfig",
+            "description": "Judge configuration."
+        },
+        "CanaryJudgeGroupScore": {
+            "type": "object",
+            "properties": {
+                "classification": {
+                    "type": "string"
+                },
+                "classificationReason": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "score": {
+                    "type": "number",
+                    "format": "double"
+                }
+            },
+            "title": "CanaryJudgeGroupScore"
+        },
+        "CanaryJudgeResult": {
+            "type": "object",
+            "properties": {
+                "groupScores": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CanaryJudgeGroupScore"
+                    }
+                },
+                "judgeName": {
+                    "type": "string"
+                },
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CanaryAnalysisResult"
+                    }
+                },
+                "score": {
+                    "$ref": "#/definitions/CanaryJudgeScore"
+                }
+            },
+            "title": "CanaryJudgeResult"
+        },
+        "CanaryJudgeScore": {
+            "type": "object",
+            "properties": {
+                "classification": {
+                    "type": "string"
+                },
+                "classificationReason": {
+                    "type": "string"
+                },
+                "score": {
+                    "type": "number",
+                    "format": "double"
+                }
+            },
+            "title": "CanaryJudgeScore"
+        },
+        "CanaryMetricConfig": {
+            "type": "object",
+            "properties": {
+                "analysisConfigurations": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object"
+                        }
+                    }
+                },
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "query": {
+                    "$ref": "#/definitions/CanaryMetricSetQueryConfig"
+                },
+                "scopeName": {
+                    "type": "string"
+                }
+            },
+            "title": "CanaryMetricConfig"
+        },
+        "CanaryMetricSetQueryConfig": {
+            "type": "object",
+            "properties": {
+                "customFilter": {
+                    "type": "string"
+                },
+                "customFilterTemplate": {
+                    "type": "string"
+                },
+                "customInlineTemplate": {
+                    "type": "string"
+                },
+                "serviceType": {
+                    "type": "string"
+                }
+            },
+            "title": "CanaryMetricSetQueryConfig"
+        },
+        "CanaryResult": {
+            "type": "object",
+            "properties": {
+                "canaryDuration": {
+                    "$ref": "#/definitions/Duration"
+                },
+                "judgeResult": {
+                    "$ref": "#/definitions/CanaryJudgeResult"
+                }
+            },
+            "title": "CanaryResult"
+        },
+        "CanaryScope": {
+            "type": "object",
+            "properties": {
+                "end": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "extendedScopeParams": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "location": {
+                    "type": "string"
+                },
+                "scope": {
+                    "type": "string"
+                },
+                "start": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "step": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "title": "CanaryScope"
+        },
+        "CanaryScopePair": {
+            "type": "object",
+            "properties": {
+                "controlScope": {
+                    "$ref": "#/definitions/CanaryScope"
+                },
+                "experimentScope": {
+                    "$ref": "#/definitions/CanaryScope"
+                }
+            },
+            "title": "CanaryScopePair"
+        },
+        "Duration": {
+            "type": "object",
+            "properties": {
+                "nano": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "negative": {
+                    "type": "boolean"
+                },
+                "seconds": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "units": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TemporalUnit"
+                    }
+                },
+                "zero": {
+                    "type": "boolean"
+                }
+            },
+            "title": "Duration"
+        },
+        "ExpectedArtifact": {
+            "type": "object",
+            "properties": {
+                "boundArtifact": {
+                    "$ref": "#/definitions/Artifact"
+                },
+                "defaultArtifact": {
+                    "$ref": "#/definitions/Artifact"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "matchArtifact": {
+                    "$ref": "#/definitions/Artifact"
+                },
+                "useDefaultArtifact": {
+                    "type": "boolean"
+                },
+                "usePriorArtifact": {
+                    "type": "boolean"
+                }
+            },
+            "title": "ExpectedArtifact"
+        },
+        "HydrateQueueOutput": {
+            "type": "object",
+            "required": [
+                "dryRun",
+                "executions"
+            ],
+            "properties": {
+                "dryRun": {
+                    "type": "boolean"
+                },
+                "executions": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/ProcessedExecution"
+                    }
+                }
+            },
+            "title": "HydrateQueueOutput"
+        },
+        "LastModifiedDetails": {
+            "type": "object",
+            "properties": {
+                "allowedAccounts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "lastModifiedTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "title": "LastModifiedDetails"
+        },
+        "Map": {
+            "type": "object",
+            "title": "Map",
+            "additionalProperties": {
+                "type": "object"
+            }
+        },
+        "Map«string,object»": {
+            "type": "object",
+            "title": "Map«string,object»",
+            "additionalProperties": {
+                "type": "object"
+            }
+        },
+        "Map«string,string»": {
+            "type": "object",
+            "title": "Map«string,string»",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "Message": {
+            "type": "object",
+            "required": [
+                "attributes"
+            ],
+            "properties": {
+                "ackTimeoutMs": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "attribute": {
+                    "$ref": "#/definitions/Attribute"
+                },
+                "attributes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Attribute"
+                    }
+                }
+            },
+            "title": "Message"
+        },
+        "Metadata": {
+            "type": "object",
+            "properties": {
+                "hidden": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "title": "Metadata"
+        },
+        "MetricSet": {
+            "type": "object",
+            "properties": {
+                "attributes": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "endTimeIso": {
+                    "type": "string"
+                },
+                "endTimeMillis": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "startTimeIso": {
+                    "type": "string"
+                },
+                "startTimeMillis": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "stepMillis": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "title": "MetricSet"
+        },
+        "MetricSetPair": {
+            "type": "object",
+            "properties": {
+                "attributes": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "scopes": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/MetricSetScope"
+                    }
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "values": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "format": "double"
+                        }
+                    }
+                }
+            },
+            "title": "MetricSetPair"
+        },
+        "MetricSetScope": {
+            "type": "object",
+            "properties": {
+                "startTimeIso": {
+                    "type": "string"
+                },
+                "startTimeMillis": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "stepMillis": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "title": "MetricSetScope"
+        },
+        "PausedDetails": {
+            "type": "object",
+            "properties": {
+                "pauseTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "paused": {
+                    "type": "boolean"
+                },
+                "pausedBy": {
+                    "type": "string"
+                },
+                "pausedMs": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "resumeTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "resumedBy": {
+                    "type": "string"
+                }
+            },
+            "title": "PausedDetails"
+        },
+        "PipelineExecution": {
+            "type": "object",
+            "properties": {
+                "application": {
+                    "type": "string"
+                },
+                "authentication": {
+                    "$ref": "#/definitions/AuthenticationDetails"
+                },
+                "buildTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "canceled": {
+                    "type": "boolean"
+                },
+                "canceledBy": {
+                    "type": "string"
+                },
+                "cancellationReason": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "endTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "keepWaitingPipelines": {
+                    "type": "boolean"
+                },
+                "limitConcurrent": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "notifications": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Map«string,object»"
+                    }
+                },
+                "origin": {
+                    "type": "string"
+                },
+                "partition": {
+                    "type": "string"
+                },
+                "paused": {
+                    "$ref": "#/definitions/PausedDetails"
+                },
+                "pipelineConfigId": {
+                    "type": "string"
+                },
+                "source": {
+                    "$ref": "#/definitions/PipelineSource"
+                },
+                "spelEvaluator": {
+                    "type": "string"
+                },
+                "stages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/StageExecution"
+                    }
+                },
+                "startTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "startTimeExpiry": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "NOT_STARTED",
+                        "RUNNING",
+                        "PAUSED",
+                        "SUSPENDED",
+                        "SUCCEEDED",
+                        "FAILED_CONTINUE",
+                        "TERMINAL",
+                        "CANCELED",
+                        "REDIRECT",
+                        "STOPPED",
+                        "SKIPPED",
+                        "BUFFERED"
+                    ]
+                },
+                "templateVariables": {
+                    "type": "object"
+                },
+                "trigger": {
+                    "$ref": "#/definitions/Trigger"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "pipeline",
+                        "orchestration"
+                    ]
+                }
+            },
+            "title": "PipelineExecution"
+        },
+        "PipelineSource": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                }
+            },
+            "title": "PipelineSource"
+        },
+        "ProcessedExecution": {
+            "type": "object",
+            "required": [
+                "actions",
+                "canApply"
+            ],
+            "properties": {
+                "actions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Action"
+                    }
+                },
+                "canApply": {
+                    "type": "boolean"
+                },
+                "startTime": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "title": "ProcessedExecution"
+        },
+        "ResponseEntity": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "object"
+                },
+                "statusCode": {
+                    "type": "string",
+                    "enum": [
+                        "100 CONTINUE",
+                        "101 SWITCHING_PROTOCOLS",
+                        "102 PROCESSING",
+                        "103 CHECKPOINT",
+                        "200 OK",
+                        "201 CREATED",
+                        "202 ACCEPTED",
+                        "203 NON_AUTHORITATIVE_INFORMATION",
+                        "204 NO_CONTENT",
+                        "205 RESET_CONTENT",
+                        "206 PARTIAL_CONTENT",
+                        "207 MULTI_STATUS",
+                        "208 ALREADY_REPORTED",
+                        "226 IM_USED",
+                        "300 MULTIPLE_CHOICES",
+                        "301 MOVED_PERMANENTLY",
+                        "302 FOUND",
+                        "302 MOVED_TEMPORARILY",
+                        "303 SEE_OTHER",
+                        "304 NOT_MODIFIED",
+                        "305 USE_PROXY",
+                        "307 TEMPORARY_REDIRECT",
+                        "308 PERMANENT_REDIRECT",
+                        "400 BAD_REQUEST",
+                        "401 UNAUTHORIZED",
+                        "402 PAYMENT_REQUIRED",
+                        "403 FORBIDDEN",
+                        "404 NOT_FOUND",
+                        "405 METHOD_NOT_ALLOWED",
+                        "406 NOT_ACCEPTABLE",
+                        "407 PROXY_AUTHENTICATION_REQUIRED",
+                        "408 REQUEST_TIMEOUT",
+                        "409 CONFLICT",
+                        "410 GONE",
+                        "411 LENGTH_REQUIRED",
+                        "412 PRECONDITION_FAILED",
+                        "413 PAYLOAD_TOO_LARGE",
+                        "413 REQUEST_ENTITY_TOO_LARGE",
+                        "414 URI_TOO_LONG",
+                        "414 REQUEST_URI_TOO_LONG",
+                        "415 UNSUPPORTED_MEDIA_TYPE",
+                        "416 REQUESTED_RANGE_NOT_SATISFIABLE",
+                        "417 EXPECTATION_FAILED",
+                        "418 I_AM_A_TEAPOT",
+                        "419 INSUFFICIENT_SPACE_ON_RESOURCE",
+                        "420 METHOD_FAILURE",
+                        "421 DESTINATION_LOCKED",
+                        "422 UNPROCESSABLE_ENTITY",
+                        "423 LOCKED",
+                        "424 FAILED_DEPENDENCY",
+                        "425 TOO_EARLY",
+                        "426 UPGRADE_REQUIRED",
+                        "428 PRECONDITION_REQUIRED",
+                        "429 TOO_MANY_REQUESTS",
+                        "431 REQUEST_HEADER_FIELDS_TOO_LARGE",
+                        "451 UNAVAILABLE_FOR_LEGAL_REASONS",
+                        "500 INTERNAL_SERVER_ERROR",
+                        "501 NOT_IMPLEMENTED",
+                        "502 BAD_GATEWAY",
+                        "503 SERVICE_UNAVAILABLE",
+                        "504 GATEWAY_TIMEOUT",
+                        "505 HTTP_VERSION_NOT_SUPPORTED",
+                        "506 VARIANT_ALSO_NEGOTIATES",
+                        "507 INSUFFICIENT_STORAGE",
+                        "508 LOOP_DETECTED",
+                        "509 BANDWIDTH_LIMIT_EXCEEDED",
+                        "510 NOT_EXTENDED",
+                        "511 NETWORK_AUTHENTICATION_REQUIRED"
+                    ]
+                },
+                "statusCodeValue": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            },
+            "title": "ResponseEntity"
+        },
+        "StageExecution": {
+            "type": "object",
+            "properties": {
+                "context": {
+                    "type": "object"
+                },
+                "endTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "execution": {
+                    "$ref": "#/definitions/PipelineExecution"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "lastModified": {
+                    "$ref": "#/definitions/LastModifiedDetails"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "outputs": {
+                    "type": "object"
+                },
+                "parentStageId": {
+                    "type": "string"
+                },
+                "refId": {
+                    "type": "string"
+                },
+                "requisiteStageRefIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "scheduledTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "startTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "startTimeExpiry": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "NOT_STARTED",
+                        "RUNNING",
+                        "PAUSED",
+                        "SUSPENDED",
+                        "SUCCEEDED",
+                        "FAILED_CONTINUE",
+                        "TERMINAL",
+                        "CANCELED",
+                        "REDIRECT",
+                        "STOPPED",
+                        "SKIPPED",
+                        "BUFFERED"
+                    ]
+                },
+                "syntheticStageOwner": {
+                    "type": "string",
+                    "enum": [
+                        "STAGE_BEFORE",
+                        "STAGE_AFTER"
+                    ]
+                },
+                "tasks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TaskExecution"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "title": "StageExecution"
+        },
+        "TaskExecution": {
+            "type": "object",
+            "properties": {
+                "endTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "implementingClass": {
+                    "type": "string"
+                },
+                "loopEnd": {
+                    "type": "boolean"
+                },
+                "loopStart": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "stageEnd": {
+                    "type": "boolean"
+                },
+                "stageStart": {
+                    "type": "boolean"
+                },
+                "startTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "NOT_STARTED",
+                        "RUNNING",
+                        "PAUSED",
+                        "SUSPENDED",
+                        "SUCCEEDED",
+                        "FAILED_CONTINUE",
+                        "TERMINAL",
+                        "CANCELED",
+                        "REDIRECT",
+                        "STOPPED",
+                        "SKIPPED",
+                        "BUFFERED"
+                    ]
+                }
+            },
+            "title": "TaskExecution"
+        },
+        "TemporalUnit": {
+            "type": "object",
+            "properties": {
+                "dateBased": {
+                    "type": "boolean"
+                },
+                "duration": {
+                    "$ref": "#/definitions/Duration"
+                },
+                "durationEstimated": {
+                    "type": "boolean"
+                },
+                "timeBased": {
+                    "type": "boolean"
+                }
+            },
+            "title": "TemporalUnit"
+        },
+        "Trigger": {
+            "type": "object",
+            "properties": {
+                "artifacts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Artifact"
+                    }
+                },
+                "correlationId": {
+                    "type": "string"
+                },
+                "dryRun": {
+                    "type": "boolean"
+                },
+                "notifications": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Map«string,object»"
+                    }
+                },
+                "parameters": {
+                    "type": "object"
+                },
+                "rebake": {
+                    "type": "boolean"
+                },
+                "resolvedExpectedArtifacts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ExpectedArtifact"
+                    }
+                },
+                "strategy": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "title": "Trigger"
+        }
+    }
+}
