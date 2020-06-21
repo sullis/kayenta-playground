@@ -3,7 +3,7 @@ package demo.testcontainers
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import io.restassured.RestAssured
+import io.restassured.RestAssured.given
 import org.hamcrest.CoreMatchers.containsString
 
 class KayentaContainerSpec
@@ -27,10 +27,11 @@ class KayentaContainerSpec
   }
 
   "swagger UI" should "exist" in {
-    RestAssured.given()
+    given()
+      .request()
       .get(kayenta.swaggerUiUrl)
       .prettyPeek()
-      .then()
+    .then()
       .assertThat()
       .statusCode(200)
       .contentType("text/html")
@@ -38,10 +39,11 @@ class KayentaContainerSpec
   }
 
   "swagger 2 specification" should "exist" in {
-    RestAssured.given()
+    given()
+      .request()
       .get(kayenta.swaggerSpecificationUrl)
       .prettyPeek()
-      .then()
+    .then()
       .assertThat()
       .statusCode(200)
       .contentType("application/json")
