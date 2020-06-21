@@ -1,2 +1,11 @@
 *.class
 *.log
+*.tmp
+out
+.classpath
+.metals/
+.bloop/
+project/.bloop/
+.idea/
+*.iml
+target/
