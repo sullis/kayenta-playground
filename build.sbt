@@ -33,5 +33,5 @@ guardrailTasks in Compile := List(
   ScalaClient(
     file("src/main/resources/swagger/kayenta-api.json"),
     pkg="com.example.clients.foobar",
-    imports=List("support.PositiveLong")),
+    imports=List("_root_.support.PositiveLong")),
 )
