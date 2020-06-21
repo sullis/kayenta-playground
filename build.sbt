@@ -30,5 +30,8 @@ libraryDependencies ++= Seq(
 )
 
 guardrailTasks in Compile := List(
-  ScalaClient(file("src/main/resources/swagger/kayenta-api.json"), pkg="com.example.clients.foobar", imports=List("support.PositiveLong")),
+  ScalaClient(
+    file("src/main/resources/swagger/kayenta-api.json"),
+    pkg="com.example.clients.foobar",
+    imports=List("support.PositiveLong")),
 )
