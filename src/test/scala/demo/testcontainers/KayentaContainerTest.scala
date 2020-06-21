@@ -11,7 +11,7 @@ class KayentaContainerSpec
   with BeforeAndAfterAll
   with Matchers {
 
-  var kayenta: KayentaContainer = _
+  private var kayenta: KayentaContainer = _
 
   override def beforeAll() {
     kayenta = new KayentaContainer()
