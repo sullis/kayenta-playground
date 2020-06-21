@@ -1,4 +1,6 @@
 
+enablePlugins(GuardrailPlugin)
+
 name := "kayenta-demo"
 
 version := "0.0.1-SNAPSHOT"
@@ -25,4 +27,8 @@ libraryDependencies ++= Seq(
   "io.rest-assured"    % "rest-assured"   % "4.3.0"     % Test,
   "org.slf4j"          % "slf4j-api"      % "1.7.30"    % Test,
   "org.slf4j"          % "slf4j-simple"   % "1.7.30"    % Test
+)
+
+guardrailTasks in Compile := List(
+  ScalaClient(file("src/main/swagger2/kayenta-api.json"), pkg="com.example.clients.foobar", imports=List("support.PositiveLong")),
 )
