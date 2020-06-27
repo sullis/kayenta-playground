@@ -5,7 +5,7 @@ name := "kayenta-demo"
 
 version := "0.0.1-SNAPSHOT"
 
-scalaVersion := "2.13.2"
+scalaVersion := "2.13.3"
 
 scalacOptions += "-Xexperimental"
 
