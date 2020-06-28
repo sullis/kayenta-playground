@@ -17,7 +17,7 @@ import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import demo.clients.`canary-controller`.{`Canary-controllerClient` => CanaryControllerClient}
+import demo.clients.`canary-controller`.CanaryControllerClient
 import org.scalatest.concurrent.ScalaFutures
 
 class KayentaContainerSpec
@@ -34,7 +34,7 @@ class KayentaContainerSpec
   implicit val actorMat = ActorMaterializer
   implicit val actorSys = ActorSystem()
 
-  implicit val singleRequestHttpClient: HttpRequest => Future[HttpResponse] = { 
+  implicit val singleRequestHttpClient: HttpRequest => Future[HttpResponse] = {
     (req: HttpRequest) => Http()(actorSys).singleRequest(req)
   }
 
@@ -78,10 +78,10 @@ class KayentaContainerSpec
   "CanaryControllerClient" should "connect to server" in {
     val client = new CanaryControllerClient(kayenta.connectionUrl)
 
-    val futureValue = client.initiateCanaryWithConfigUsingPOST(application = Some("test-application"))
+    val futureValue = client.initiateCanaryWithConfigUsingPost(application = Some("test-application"))
       .value
       .futureValue
-      
+
     System.out.println(futureValue)
 
     /*
@@ -90,11 +90,11 @@ class KayentaContainerSpec
       handleCreated,
       handleUnauthorized,
       handleForbidden,
-      handleNotFound) 
+      handleNotFound)
       */
   }
-  
-  def handleOk(canaryExecutionResponse: CanaryExecutionResponse): Unit = { 
+
+  def handleOk(canaryExecutionResponse: CanaryExecutionResponse): Unit = {
     canaryExecutionResponse.canaryExecutionId shouldBe empty
   }
 
@@ -102,5 +102,5 @@ class KayentaContainerSpec
   def handleUnauthorized(): Unit = { fail("whatever") }
   def handleForbidden(): Unit = { fail("whatever") }
   def handleNotFound(): Unit = { fail("whatever") }
-  
+
 }
