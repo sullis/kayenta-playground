@@ -1,7 +1,7 @@
 
 enablePlugins(GuardrailPlugin)
 
-name := "kayenta-demo"
+name := "kayenta-playground"
 
 version := "0.0.1-SNAPSHOT"
 
