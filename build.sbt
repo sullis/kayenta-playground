@@ -24,7 +24,7 @@ libraryDependencies ++= Seq(
   "org.testcontainers" % "testcontainers" % "1.14.3"    % Test,
   "com.google.guava"   % "guava"          % "29.0-jre"  % Test,
   "org.scalatest"     %% "scalatest"      % "3.2.0"     % Test,
-  "io.rest-assured"    % "rest-assured"   % "4.3.0"     % Test,
+  "io.rest-assured"    % "rest-assured"   % "4.3.1"     % Test,
   "org.slf4j"          % "slf4j-api"      % "1.7.30"    % Test,
   "org.slf4j"          % "slf4j-simple"   % "1.7.30"    % Test
 )
