@@ -7,7 +7,7 @@ import java.nio.file.Paths
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.lifecycle.Startable
 
-class KayentaContainer()
+class KayentaContainer
   extends Startable {
 
   import KayentaContainer.resolveFile
