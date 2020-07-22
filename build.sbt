@@ -21,7 +21,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http"      % "10.1.12",
   "com.typesafe.akka" %% "akka-stream"    % "2.6.8",
   "javax.xml.bind"     % "jaxb-api"       % "2.3.1",
-  "org.testcontainers" % "testcontainers" % "1.14.3"    % Test,
+  "org.testcontainers" % "testcontainers" % "1.15.0-rc1"    % Test,
   "com.google.guava"   % "guava"          % "29.0-jre"  % Test,
   "org.scalatest"     %% "scalatest"      % "3.2.0"     % Test,
   "io.rest-assured"    % "rest-assured"   % "4.3.1"     % Test,
