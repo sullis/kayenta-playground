@@ -23,7 +23,7 @@ libraryDependencies ++= Seq(
   "javax.xml.bind"     % "jaxb-api"       % "2.3.1",
   "org.testcontainers" % "testcontainers" % "1.15.0-rc1"    % Test,
   "com.google.guava"   % "guava"          % "29.0-jre"  % Test,
-  "org.scalatest"     %% "scalatest"      % "3.2.1"     % Test,
+  "org.scalatest"     %% "scalatest"      % "3.2.2"     % Test,
   "io.rest-assured"    % "rest-assured"   % "4.3.1"     % Test,
   "org.slf4j"          % "slf4j-api"      % "1.7.30"    % Test,
   "org.slf4j"          % "slf4j-simple"   % "1.7.30"    % Test
