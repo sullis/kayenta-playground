@@ -1,1 +1,1 @@
-addSbtPlugin("com.twilio" % "sbt-guardrail" % "0.59.0.1")
+addSbtPlugin("com.twilio" % "sbt-guardrail" % "0.60.0")
