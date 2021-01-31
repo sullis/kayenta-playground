@@ -19,7 +19,7 @@ libraryDependencies ++= Seq(
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http"      % "10.2.3",
-  "com.typesafe.akka" %% "akka-stream"    % "2.6.11",
+  "com.typesafe.akka" %% "akka-stream"    % "2.6.12",
   "javax.xml.bind"     % "jaxb-api"       % "2.3.1",
   "org.testcontainers" % "testcontainers" % "1.15.1"    % Test,
   "com.google.guava"   % "guava"          % "30.1-jre"  % Test,
