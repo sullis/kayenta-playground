@@ -5,7 +5,7 @@ name := "kayenta-playground"
 
 version := "0.0.1-SNAPSHOT"
 
-scalaVersion := "2.13.5"
+scalaVersion := "2.13.6"
 
 scalacOptions += "-Xexperimental"
 
