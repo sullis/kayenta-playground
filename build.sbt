@@ -9,7 +9,7 @@ scalaVersion := "2.13.6"
 
 scalacOptions += "-Xexperimental"
 
-val circeVersion = "0.13.0"
+val circeVersion = "0.14.1"
 
 libraryDependencies ++= Seq(
   "io.circe" %% "circe-core",
