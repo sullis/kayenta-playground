@@ -29,7 +29,7 @@ libraryDependencies ++= Seq(
   "org.slf4j"          % "slf4j-simple"   % "1.7.30"    % Test
 )
 
-guardrailTasks in Compile := List(
+Compile / guardrailTasks := List(
   ScalaClient(
     file("src/main/resources/swagger/kayenta-api.json"),
     pkg="demo.clients",
