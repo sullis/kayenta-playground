@@ -25,8 +25,8 @@ libraryDependencies ++= Seq(
   "com.google.guava"   % "guava"          % "30.1.1-jre"  % Test,
   "org.scalatest"     %% "scalatest"      % "3.2.9"     % Test,
   "io.rest-assured"    % "rest-assured"   % "4.4.0"     % Test,
-  "org.slf4j"          % "slf4j-api"      % "1.7.30"    % Test,
-  "org.slf4j"          % "slf4j-simple"   % "1.7.30"    % Test
+  "org.slf4j"          % "slf4j-api"      % "1.7.31"    % Test,
+  "org.slf4j"          % "slf4j-simple"   % "1.7.31"    % Test
 )
 
 Compile / guardrailTasks := List(
