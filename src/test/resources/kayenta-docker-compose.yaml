@@ -5,7 +5,7 @@ services:
     ports:
       - 6379:6379
   kayenta:
-    image: gcr.io/spinnaker-marketplace/kayenta:spinnaker-1.20.5
+    image: gcr.io/spinnaker-marketplace/kayenta:spinnaker-1.21.4-ubuntu
     ports:
       - 8090:8090
     environment:
