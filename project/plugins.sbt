@@ -1,1 +1,1 @@
-addSbtPlugin("dev.guardrail" % "sbt-guardrail" % "0.65.4")
+addSbtPlugin("dev.guardrail" % "sbt-guardrail" % "0.65.5")
