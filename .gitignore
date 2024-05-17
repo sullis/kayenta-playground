@@ -9,3 +9,4 @@ project/.bloop/
 .idea/
 *.iml
 target/
+.bsp/
