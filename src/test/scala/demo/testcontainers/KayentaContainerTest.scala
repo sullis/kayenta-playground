@@ -10,15 +10,13 @@ import demo.clients.AkkaHttpImplicits._
 import demo.clients.Implicits._
 import cats.implicits._
 import org.scalatest.time.SpanSugar._
-import scala.concurrent.Future
-import akka.http.scaladsl.model.{HttpRequest, HttpResponse}
-import akka.actor.ActorSystem
-import akka.http.scaladsl.Http
-import akka.stream.ActorMaterializer
 
+import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 import demo.clients.`canary-controller`.CanaryControllerClient
 import org.scalatest.concurrent.ScalaFutures
+
+import scala.language.postfixOps
 
 class KayentaContainerSpec
   extends AnyFlatSpec
@@ -30,13 +28,6 @@ class KayentaContainerSpec
   override implicit val patienceConfig = PatienceConfig(10 seconds, 1 second)
 
   private var kayenta: KayentaContainer = _
-
-  implicit val actorMat = ActorMaterializer
-  implicit val actorSys = ActorSystem()
-
-  implicit val singleRequestHttpClient: HttpRequest => Future[HttpResponse] = {
-    (req: HttpRequest) => Http()(actorSys).singleRequest(req)
-  }
 
   override def beforeAll() {
     kayenta = new KayentaContainer()
