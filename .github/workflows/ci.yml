@@ -21,4 +21,4 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: 'temurin'
     - name: Run tests
-      run: sbt test
+      run: mvn -B -ntp clean test
