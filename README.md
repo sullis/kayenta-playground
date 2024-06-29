@@ -1,3 +1,5 @@
 # kayenta-playground
 
-Scala and Kayenta
+Kayenta canary analysis
+
+
